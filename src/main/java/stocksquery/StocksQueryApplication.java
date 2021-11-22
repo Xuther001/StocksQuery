@@ -23,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class StocksQueryApplication {
 
-	private static String stockSymbol;
+	private static String userInput;
 	
 	public static void main(String[] args) throws SQLException {
 		
@@ -36,29 +36,23 @@ public class StocksQueryApplication {
 		String dateTime = dtf.format(now) + "";
 		
 		while (!false) {
-		System.out.println("Please enter a stock symbol");
-		stockSymbol = input.next().toUpperCase();
+		System.out.println("Please enter a stock symbol or enter \"history\" to show previous searches");
+		userInput = input.next().toUpperCase();
 		RestTemplate template = new RestTemplate();;
 		Data data = template.getForObject(
-				"https://finnhub.io/api/v1/stock/insider-transactions?symbol=" + stockSymbol + "&token=sandbox_c683tuqad3iagio36ujg", Data.class);
+				"https://finnhub.io/api/v1/stock/insider-transactions?symbol=" + userInput + "&token=sandbox_c683tuqad3iagio36ujg", Data.class);
 		Quote quote = template.getForObject(
-				"https://finnhub.io/api/v1/quote?symbol=" + stockSymbol + "&token=sandbox_c683tuqad3iagio36ujg", Quote.class);
+				"https://finnhub.io/api/v1/quote?symbol=" + userInput + "&token=sandbox_c683tuqad3iagio36ujg", Quote.class);
 		
-		ResponseEntity<List<String>> peersResponse = template.exchange("https://finnhub.io/api/v1/stock/peers?symbol=" + stockSymbol + "&token=sandbox_c683tuqad3iagio36ujg",
+		ResponseEntity<List<String>> peersResponse = template.exchange("https://finnhub.io/api/v1/stock/peers?symbol=" + userInput + "&token=sandbox_c683tuqad3iagio36ujg",
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {
         });
-		
-		List<String> peers = peersResponse.getBody();
-		System.out.println("Similar Companies " + peers);
-		System.out.println("List of notable trades " + data);
-		System.out.println(quote.toString());
-		
 		
 		//connect using jdbc
 		String showAllRecords = "SELECT * FROM searchRecord";
 		String connectionUrl = "jdbc:mysql://localhost:3306/stockQuery?serverTimezone=UTC";
 		String res = "";
-		String addRecord = "INSERT INTO searchRecord VALUES(" + "'" + stockSymbol + "'" + ", " + quote.getC() + ", " + "'" + dateTime + "'" + ");"; //for adding records
+		String addRecord = "INSERT INTO searchRecord VALUES(" + "'" + userInput + "'" + ", " + quote.getC() + ", " + "'" + dateTime + "'" + ");"; //for adding records
 
 		Connection conn = DriverManager.getConnection(connectionUrl, "root", "legacy85"); 
 		        PreparedStatement ps = conn.prepareStatement(showAllRecords); 
@@ -70,9 +64,16 @@ public class StocksQueryApplication {
 		            String dateTimeRecord = rs.getString("DateTime");
 		            res += symbolRecord + " " + priceRecord + " " + dateTimeRecord;
 		        }
-		System.out.println("Previous searches: " + res);
-		Statement stmt = conn.createStatement(); //for adding records
-		stmt.executeUpdate(addRecord); //for adding records
+		if (userInput.toUpperCase().equals("HISTORY")) {
+			System.out.println("Previous searches: " + res);
+			} else {
+				List<String> peers = peersResponse.getBody();
+				System.out.println("Similar Companies " + peers);
+				System.out.println("List of notable trades " + data);
+				System.out.println(quote.toString());
+				Statement stmt = conn.createStatement(); //for adding records
+				stmt.executeUpdate(addRecord); //for adding records
+			}
 		}
 	}
 
