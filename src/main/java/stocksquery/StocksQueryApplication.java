@@ -122,10 +122,13 @@ public class StocksQueryApplication {
 		String addRecord = "INSERT INTO searchRecord VALUES(" + "'" + stockSym + "'" + ", " + quote.getC() + ", " + "'" + dateTime + "'" + ");"; //for adding records
 
 		Connection conn = DriverManager.getConnection(connectionUrl, "root", "legacy85"); 
-		        PreparedStatement ps = conn.prepareStatement(showAllRecords); 
+		        PreparedStatement ps = conn.prepareStatement(showAllRecords);
 		        
 		Statement stmt = conn.createStatement(); //for adding records
 		stmt.executeUpdate(addRecord); //for adding records
+		//execute the below insert to mysql to test code
+		//INSERT INTO searchRecord(Symbol, Price, DateTime) VALUES ("TEST", 555.55, Now() - INTERVAL 2 DAY);
+		stmt.executeUpdate("DELETE from searchRecord WHERE DateTime <= NOW() - INTERVAL 1 DAY");
 	};
 
 	@Bean
