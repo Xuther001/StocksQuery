@@ -1,9 +1,9 @@
 # StocksQuery
 
-# About
+## About
 
-# Setup
+## Setup
 
-# Running the App & Commands
+## Running the App & Commands
 
-# API Source
+### API Source
