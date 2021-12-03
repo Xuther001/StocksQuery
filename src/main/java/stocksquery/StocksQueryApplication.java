@@ -38,7 +38,7 @@ public class StocksQueryApplication {
 		
 		//for purposes of testing, hourly update is set for every 1 min
 	    Timer timer = new Timer();
-	    timer.schedule(new RepeatedTask(), 20000, 60000);
+	    timer.schedule(new RepeatedTask(), 0, 60000);
 		
 		@SuppressWarnings("resource")
 		Scanner input = new Scanner(System.in);
