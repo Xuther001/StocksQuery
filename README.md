@@ -67,3 +67,6 @@ These files are there to potentially be used for another feature sometime in the
 Currently the app will process ALL inputs. Yes, even if you enter an invalid stock symbol it will process it as if it's a valid stock symbol and will be saving the invalid stock symbol as well as the incorrect data returned by the API.
 ### Status: Fixed
 No Entries Yet
+
+## Disclaimer
+For the purposes of testing this app. Every "hour" is shortened to every "1 minute". So the app will update the stocks on your watch list every minute instead of every hour.
