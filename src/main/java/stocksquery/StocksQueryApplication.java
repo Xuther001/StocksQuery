@@ -49,7 +49,7 @@ public class StocksQueryApplication {
 		String dateTime = dtf.format(now) + "";
 		
 		while (!false) {
-		System.out.println("Please enter a stock symbol or enter \"history\" to show previous searches. \"+\" + \"stock Symbol\" to add stock to watchlist (ie: +aapl to add Apple to watch list.");
+		System.out.println("Please enter a stock symbol or enter \"history\" to show previous searches. \"+\" + \"stock Symbol\" to add stock to watchlist (ie: enter \"+aapl\" to add Apple to watch list.)");
 		userInput = input.next().toUpperCase();
 		RestTemplate template = new RestTemplate();;
 		Data data = template.getForObject(
