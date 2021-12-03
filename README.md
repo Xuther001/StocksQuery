@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS searchRecord (
     DateTime datetime
 );
 ```
-Add the following record to "searchRecord" table so that we can test our "delete records older than 24 hours" feature.
+Add a record to "searchRecord" table older than 24 hours so that we can test our "delete records older than 24 hours" feature. After running the app, this record should be deleted from your table automatically since it is older than 24 hours. The insert statement below will create a record that simulates a record created exactly 2 days ago.
 ```
 INSERT INTO searchRecord(Symbol, Price, DateTime) VALUES ("TEST", 555.55, Now() - INTERVAL 2 DAY);
 ```
