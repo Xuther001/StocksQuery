@@ -28,7 +28,11 @@ CREATE TABLE IF NOT EXISTS searchRecord (
     DateTime datetime
 );
 ```
-Within the StocksQueryApplication.java change
+Within the StocksQueryApplication.java
+```
+src/main/java/stocksquery/StocksQueryApplication.java
+```
+change
 ```
 Connection conn = DriverManager.getConnection(connectionUrl, "username", "password");
 ```
@@ -54,7 +58,7 @@ src/main/resources/templates/start.html
 ```
 These files are there to potentially be used for another feature sometime in the future.
 
-## Known Bugs
+## Known Bugs & Issues
 ### Status: Actively working on it
 Currently the app will process ALL inputs. Yes, even if you enter an invalid stock symbol it will process it as if it's a valid stock symbol and will be saving the invalid stock symbol as well as the incorrect data returned by the API.
 ### Status: Fixed
