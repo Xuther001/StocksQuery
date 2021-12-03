@@ -40,7 +40,7 @@ change
 ```
 Connection conn = DriverManager.getConnection(connectionUrl, "username", "password");
 ```
-to reflect your local mysql username and password.
+to reflect your local mysql username and password. "connectionUrl" is location of your local mysql database you want to connect to, it will most likely be "jdbc:mysql://localhost:3306/stockQuery".
 
 ## Running the App & Commands
 Run the app by right clicking on "StocksQueryApplication" then "Run as" -> "Java Application"
