@@ -28,6 +28,10 @@ CREATE TABLE IF NOT EXISTS searchRecord (
     DateTime datetime
 );
 ```
+Add the following record to "searchRecord" table so that we can test our "delete records older than 24 yours" feature.
+```
+INSERT INTO searchRecord(Symbol, Price, DateTime) VALUES ("TEST", 555.55, Now() - INTERVAL 2 DAY);
+```
 Within the StocksQueryApplication.java
 ```
 src/main/java/stocksquery/StocksQueryApplication.java
